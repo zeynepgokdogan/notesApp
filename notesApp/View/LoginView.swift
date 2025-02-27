@@ -17,10 +17,15 @@ struct LoginView: View {
                     TextField("Email", text: $viewModel.email)
                         .textInputAutocapitalization(.none)
                         .autocorrectionDisabled(true)
+                        .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color.blue, lineWidth: 2)
+                            )
                     SecureField("Password", text: $viewModel.password)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
                 }
                 .frame(height: 180)
-                
+                .scrollContentBackground(.hidden)
                 Button(action: {
                     viewModel.login()
                 }, label: {
@@ -45,6 +50,7 @@ struct LoginView: View {
                     }
                 }.padding()
             }
+            
         }
     }
 }

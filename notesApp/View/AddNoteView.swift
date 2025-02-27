@@ -10,38 +10,74 @@ import SwiftUI
 struct AddNoteView: View {
     @Binding var NewItemPresented: Bool
     @StateObject var viewModel = AddNoteViewViewModel()
-    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
-        ZStack{
-            Color(.systemGray6).edgesIgnoringSafeArea(.all)
-            VStack(spacing: 10.0)
-            {
-                Text("ADD NOTE")
-                    .font(.callout).bold()
-                Form{
-                    TextField("Note Title", text: $viewModel.noteTitle)
-                    TextField("Note Content", text: $viewModel.noteContent)
-           
-                }.alert(isPresented: $viewModel.showAlert, content: {
+        NavigationView {
+            ZStack {
+                Color(.systemBackground).edgesIgnoringSafeArea(.all)
+                
+                VStack(spacing: 16) {
+                    Text("Add a New Note")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .padding(.top, 20)
+                    
+                    Form {
+                        Section(header: Text("Title").font(.caption).foregroundColor(.gray)) {
+                            TextField("Enter note title...", text: $viewModel.noteTitle)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        }
+                        
+                        Section(header: Text("Content").font(.caption).foregroundColor(.gray)) {
+                            TextEditor(text: $viewModel.noteContent)
+                                .frame(minHeight: 100)
+                                .cornerRadius(8)
+                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.3)))
+                        }
+                    }
+                    .scrollContentBackground(.hidden)
+                    .frame(height: 300)
+                    
+                  
+                    Button(action: {
+                        viewModel.save()
+                        if !viewModel.noteTitle.isEmpty && !viewModel.noteContent.isEmpty {
+                            NewItemPresented = false
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }) {
+                        Text("Save Note")
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 50)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 30)
+                    }
+                    
+                    Spacer()
+                }
+                .padding()
+                .alert(isPresented: $viewModel.showAlert, content: {
                     Alert(title: Text("Error"), message: Text("Please fill all fields"), dismissButton: .default(Text("OK")))
                 })
-                Button(action: {
-                    viewModel.save()
-                    NewItemPresented = false
-                }) {
-                    Text("SAVE")
-                }.foregroundStyle(.white)
-                    .frame(width: 100, height: 30)
-                    .padding()
-                    .background(
-                        LinearGradient(gradient: Gradient(colors: [Color.purple, Color.blue]), startPoint: .leading, endPoint: .trailing)
-                    ).cornerRadius(20)
             }
+            .navigationBarTitle("New Note", displayMode: .inline)
+            .navigationBarItems(leading: Button(action: {
+                NewItemPresented = false
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "xmark")
+                    .foregroundColor(.gray)
+            })
         }
     }
 }
 
 #Preview {
-    AddNoteView(NewItemPresented: Binding(get: { true }, set: { _ in }))
+    AddNoteView(NewItemPresented: .constant(true))
 }
+
+
