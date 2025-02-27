@@ -9,32 +9,41 @@ struct LoginView: View {
                     .resizable()
                     .frame(width: 150, height: 150)
                 
-                Form {
+                VStack {
                     if !viewModel.errorMessage.isEmpty {
                         Text(viewModel.errorMessage).foregroundStyle(.red)
                     }
-
+                    
                     TextField("Email", text: $viewModel.email)
                         .textInputAutocapitalization(.none)
                         .autocorrectionDisabled(true)
+                        .padding()
                         .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.blue, lineWidth: 2)
-                            )
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
                     SecureField("Password", text: $viewModel.password)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding()
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.gray, lineWidth: 1)
+                        )
                 }
                 .frame(height: 180)
                 .scrollContentBackground(.hidden)
+                .padding(.all, 30)
                 Button(action: {
                     viewModel.login()
                 }, label: {
                     ZStack {
-                        RoundedRectangle(cornerRadius: 25)
-                            .fill(Color.blue)
                         Text("Log In")
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 50)
+                            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
                             .foregroundColor(.white)
-                            .bold()
+                            .cornerRadius(10)
+                            .padding(.horizontal, 30)
                     }
                 })
                 .frame(width: 200, height: 50)
@@ -45,7 +54,8 @@ struct LoginView: View {
                             .multilineTextAlignment(.trailing)
                         
                         NavigationLink("Create An Account") {
-                            RegisterView()
+                            RegisterView(viewModel: RegisterViewViewModel())
+
                         }
                     }
                 }.padding()
