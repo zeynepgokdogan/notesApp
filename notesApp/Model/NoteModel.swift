@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NoteModel {
+struct NoteModel: Identifiable {
     let id: String
     let title: String
     let content: String

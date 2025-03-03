@@ -12,15 +12,13 @@ struct UserModel {
     let name: String
     let surname: String
     let email: String
-    let joined: TimeInterval
     
     func toFirestoreDictionary() -> [String: Any] {
         return [
             "userId": userId,
             "name": name,
             "surname": surname,
-            "email": email,
-            "joined": joined
+            "email": email
         ]
     }
 }

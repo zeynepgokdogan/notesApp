@@ -42,9 +42,30 @@
 		81BA459F2D67111F00B6FE85 /* notesAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = notesAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		81B678282D71A6C400526807 /* Exceptions for "notesApp" folder in "notesAppTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info.plist",
+			);
+			target = 81BA45942D67111F00B6FE85 /* notesAppTests */;
+		};
+		81B678292D71A6C400526807 /* Exceptions for "notesApp" folder in "notesAppUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"GoogleService-Info.plist",
+			);
+			target = 81BA459E2D67111F00B6FE85 /* notesAppUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		81BA45862D67111E00B6FE85 /* notesApp */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				81B678282D71A6C400526807 /* Exceptions for "notesApp" folder in "notesAppTests" target */,
+				81B678292D71A6C400526807 /* Exceptions for "notesApp" folder in "notesAppUITests" target */,
+			);
 			path = notesApp;
 			sourceTree = "<group>";
 		};

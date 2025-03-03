@@ -7,27 +7,37 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestoreCombineSwift
 
 struct HomeView: View {
-    @StateObject var viewModel =  HomeViewViewModel()
-    private let userId: String
+    @StateObject var viewModel: HomeViewViewModel
     
-    init(userId:String = "123"){
-        self.userId = userId
+    init(userId: String = "123") {
+        _viewModel = StateObject(wrappedValue: HomeViewViewModel(userId: userId))
     }
+
     var body: some View {
         NavigationView {
-            VStack{
-                
+            ZStack {
+                List(viewModel.notes) { note in
+                    VStack(alignment: .leading) {
+                        Text(note.title)
+                            .font(.headline)
+                        Text(note.content)
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                    }
+                }
             }
             .navigationTitle("Home")
-            .toolbar{
-                Button{
+            .toolbar {
+                Button {
                     viewModel.showNotes = true
                 } label: {
                     Image(systemName: "plus")
                 }
-            }.sheet(isPresented: $viewModel.showNotes, content: {
+            }
+            .sheet(isPresented: $viewModel.showNotes, content: {
                 AddNoteView(NewItemPresented: $viewModel.showNotes)
             })
         }
@@ -37,4 +47,5 @@ struct HomeView: View {
 #Preview {
     HomeView(userId: "123")
 }
+
 

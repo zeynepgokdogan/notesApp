@@ -10,16 +10,28 @@ class RegisterViewViewModel: ObservableObject {
     @Published var errorMessage = ""
 
     func register() {
-        
         print("🔥 Firebase Başlatıldı mı? \(FirebaseApp.app() != nil)")
-        guard validate() else { return }
-        print("Starting user registration...")
+        guard validate() else {
+            print("❌ Validation failed!")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        db.collection("test").document("check").setData(["status": "working"]) { error in
+            if let error = error {
+                print("❌ Firestore Test Hatası: \(error.localizedDescription)")
+            } else {
+                print("✅ Firestore Test: Veri başarıyla yazıldı!")
+            }
+        }
 
+        print("🚀 Kullanıcı kaydı başlıyor...")
 
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
             
             if let error = error {
+                print("❌ Firebase Auth Error: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     strongSelf.errorMessage = "Auth Error: \(error.localizedDescription)"
                 }
@@ -27,30 +39,41 @@ class RegisterViewViewModel: ObservableObject {
             }
 
             guard let userId = authResult?.user.uid else {
+                print("❌ User ID is nil!")
                 DispatchQueue.main.async {
                     strongSelf.errorMessage = "User ID not found"
                 }
                 return
             }
 
-            strongSelf.createUserWithFirestore(userId: userId, name: strongSelf.name, surname: strongSelf.surname, email: strongSelf.email)
+            print("✅ Kullanıcı oluşturuldu! UID: \(userId)")
+
+            strongSelf.createUserWithFirestore(userId: userId)
         }
     }
 
-     func createUserWithFirestore(userId: String, name: String, surname: String, email: String) {
-        let newUser = UserModel(userId: userId, name: name, surname: surname, email: email, joined: Date().timeIntervalSince1970)
-        
+    func createUserWithFirestore(userId: String) {
+        print("⚡ Firestore'a veri yazma fonksiyonu çağrıldı!")
+
         let db = Firestore.firestore()
-        let userData = newUser.toFirestoreDictionary()
         
-        print("📌 Firestore'a veri yazma işlemi başladı!")
-        print("🔥 Kaydedilecek veri: \(userData)")
+        let userData: [String: Any] = [
+            "userId": userId,
+            "name": name.trimmingCharacters(in: .whitespacesAndNewlines),
+            "surname": surname.trimmingCharacters(in: .whitespacesAndNewlines),
+            "email": email.trimmingCharacters(in: .whitespacesAndNewlines)
+        ]
         
+        print("📌 Firestore'a kaydedilecek veri: \(userData)")
+
         db.collection("users").document(userId).setData(userData) { [weak self] error in
-            print("📌 db.collection işlemi başladı...")
+            print("📌 Firestore’a yazma işlemi başladı...")
+
             if let error = error {
-                self?.errorMessage = "❌ Firestore Error: \(error.localizedDescription)"
                 print("❌ Firestore error: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self?.errorMessage = "❌ Firestore Error: \(error.localizedDescription)"
+                }
             } else {
                 print("✅ Firestore: Kullanıcı başarıyla kaydedildi!")
             }
@@ -63,11 +86,15 @@ class RegisterViewViewModel: ObservableObject {
               !surname.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            errorMessage = "Please enter all fields"
+            errorMessage = "Lütfen tüm alanları doldurun."
             return false
         }
         guard email.contains("@") && email.contains(".") else {
-            errorMessage = "Invalid email"
+            errorMessage = "Geçersiz e-posta adresi."
+            return false
+        }
+        guard password.count >= 6 else {
+            errorMessage = "Şifre en az 6 karakter olmalıdır."
             return false
         }
         return true

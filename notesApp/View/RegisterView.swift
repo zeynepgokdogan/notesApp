@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct RegisterView: View {
-    @ObservedObject var viewModel: RegisterViewViewModel
+    @StateObject var viewModel = RegisterViewViewModel()
     var body: some View {
         NavigationStack {
             VStack(spacing: 20) {
@@ -77,6 +77,5 @@ struct RegisterView: View {
 }
 
 #Preview {
-    LoginView()
+    RegisterView(viewModel: RegisterViewViewModel())
 }
-
