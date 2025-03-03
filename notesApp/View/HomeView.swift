@@ -1,17 +1,11 @@
-//
-//  HomeView.swift
-//  notesApp
-//
-//  Created by Zeynep Gökdoğan on 7.02.2025.
-//
-
 import SwiftUI
 import FirebaseAuth
 import FirebaseFirestoreCombineSwift
 
 struct HomeView: View {
     @StateObject var viewModel: HomeViewViewModel
-    
+    @State private var selectedNote: NoteModel?
+
     init(userId: String = "123") {
         _viewModel = StateObject(wrappedValue: HomeViewViewModel(userId: userId))
     }
@@ -19,17 +13,31 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List(viewModel.notes) { note in
-                    VStack(alignment: .leading) {
-                        Text(note.title)
-                            .font(.headline)
-                        Text(note.content)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                List {
+                    ForEach(viewModel.notes) { note in
+                        VStack(alignment: .leading) {
+                            Text(note.title)
+                                .font(.headline)
+                            Text(note.content)
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        .onTapGesture {
+                            selectedNote = note
+                        }
+                        .swipeActions {
+                            Button(role: .destructive) {
+                                viewModel.deleteNote(note: note)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                     }
                 }
+                .listStyle(PlainListStyle())
+                .padding()
             }
-            .navigationTitle("Home")
+            .navigationTitle("My Notes")
             .toolbar {
                 Button {
                     viewModel.showNotes = true
@@ -37,15 +45,13 @@ struct HomeView: View {
                     Image(systemName: "plus")
                 }
             }
-            .sheet(isPresented: $viewModel.showNotes, content: {
+            .sheet(isPresented: $viewModel.showNotes) {
                 AddNoteView(NewItemPresented: $viewModel.showNotes)
-            })
+            }
+            .sheet(item: $selectedNote) { note in
+                EditNoteView(note: note, isPresented: $selectedNote, viewModel: viewModel)
+            }
         }
     }
 }
-
-#Preview {
-    HomeView(userId: "123")
-}
-
 

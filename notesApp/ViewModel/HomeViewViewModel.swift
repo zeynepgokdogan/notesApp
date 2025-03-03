@@ -12,15 +12,15 @@ import FirebaseFirestore
 class HomeViewViewModel: ObservableObject {
     @Published var notes: [NoteModel] = []
     @Published var showNotes: Bool = false
-
+    
     private let db = Firestore.firestore()
     private let userId: String
-
+    
     init(userId: String) {
         self.userId = userId
         fetchNotes()
     }
-
+    
     func fetchNotes() {
         db.collection("users")
             .document(userId)
@@ -48,6 +48,33 @@ class HomeViewViewModel: ObservableObject {
                         }
                         return NoteModel(id: id, title: title, content: content, createdAt: createdAt)
                     }
+                }
+            }
+    }
+    
+    func deleteNote(note: NoteModel) {
+        db.collection("users")
+            .document(userId)
+            .collection("notes")
+            .document(note.id)
+            .delete { error in
+                if let error = error {
+                    print("Error deleting note: \(error)")
+                }
+            }
+    }
+    
+    func updateNote(note: NoteModel) {
+        db.collection("users")
+            .document(userId)
+            .collection("notes")
+            .document(note.id)
+            .updateData([
+                "title": note.title,
+                "content": note.content
+            ]) { error in
+                if let error = error {
+                    print("Error updating note: \(error)")
                 }
             }
     }

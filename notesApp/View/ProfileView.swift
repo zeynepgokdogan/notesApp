@@ -10,6 +10,7 @@ import FirebaseAuth
 
 struct ProfileView: View {
     @State private var isUserLoggedOut = false
+    @StateObject var viewModel = ProfileViewViewModel(userId: "t1213")
     
     var body: some View {
         if isUserLoggedOut {
@@ -17,15 +18,30 @@ struct ProfileView: View {
         } else {
             NavigationStack {
                 VStack {
-                    Text("Profile Page")
+                    if let user = viewModel.userdata {
+                        VStack(spacing: 10) {
+                            Text("Ad: \(user.name)")
+                                .font(.title2)
+                                .bold()
+                            Text("Soyad: \(user.surname)")
+                                .font(.title3)
+                            Text("E-posta: \(user.email)")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                        }
+                        .padding()
+                    } else {
+                        ProgressView("Yükleniyor...")
+                    }
                 }
+                .navigationTitle("Profil")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
-                            signOut()
+                            viewModel.signOut()
                         }) {
                             Image(systemName: "power.circle.fill")
-                                .foregroundColor(.red)
+                                .foregroundColor(.black)
                                 .font(.title2)
                         }
                     }
@@ -33,17 +49,10 @@ struct ProfileView: View {
             }
         }
     }
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-            print("✅ Kullanıcı başarıyla çıkış yaptı.")
-            isUserLoggedOut = true
-        } catch {
-            print("❌ Çıkış yaparken hata oluştu: \(error.localizedDescription)")
-        }
-    }
+
 }
 
 #Preview {
     ProfileView()
 }
+

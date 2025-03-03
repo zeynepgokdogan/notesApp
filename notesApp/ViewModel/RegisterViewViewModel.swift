@@ -15,15 +15,6 @@ class RegisterViewViewModel: ObservableObject {
             print("❌ Validation failed!")
             return
         }
-        
-        let db = Firestore.firestore()
-        db.collection("test").document("check").setData(["status": "working"]) { error in
-            if let error = error {
-                print("❌ Firestore Test Hatası: \(error.localizedDescription)")
-            } else {
-                print("✅ Firestore Test: Veri başarıyla yazıldı!")
-            }
-        }
 
         print("🚀 Kullanıcı kaydı başlıyor...")
 
