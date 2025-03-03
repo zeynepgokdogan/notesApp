@@ -26,26 +26,22 @@ struct EditNoteView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color(.systemBackground).edgesIgnoringSafeArea(.all)
+                Color.dynamic(.white, .black).edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 16) {
-                    Text("Edit Note")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .padding(.top, 20)
                     
                     Form {
                         Section(header: Text("Title").font(.caption).foregroundColor(.gray)) {
                             TextField("Enter note title...", text: $title)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
+                        }.listRowBackground(Color.clear)
                         
                         Section(header: Text("Content").font(.caption).foregroundColor(.gray)) {
                             TextEditor(text: $content)
                                 .frame(minHeight: 100)
                                 .cornerRadius(8)
                                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.3)))
-                        }
+                        }.listRowBackground(Color.clear)
                     }
                     .scrollContentBackground(.hidden)
                     .frame(height: 300)

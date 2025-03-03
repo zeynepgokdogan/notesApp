@@ -24,12 +24,12 @@ class ProfileViewViewModel: ObservableObject {
     func fetchUserData() {
         db.collection("users").document(userId).addSnapshotListener { snapshot, error in
             if let error = error {
-                print("❌ Kullanıcı verisi alınırken hata oluştu: \(error.localizedDescription)")
+                print("Kullanıcı verisi alınırken hata oluştu: \(error.localizedDescription)")
                 return
             }
             
             guard let data = snapshot?.data() else {
-                print("⚠️ Kullanıcı verisi bulunamadı.")
+                print("Kullanıcı verisi bulunamadı.")
                 return
             }
             
@@ -48,10 +48,10 @@ class ProfileViewViewModel: ObservableObject {
     func signOut() {
         do {
             try Auth.auth().signOut()
-            print("✅ Kullanıcı başarıyla çıkış yaptı.")
+            print("Kullanıcı başarıyla çıkış yaptı.")
             isUserLoggedOut = true
         } catch {
-            print("❌ Çıkış yaparken hata oluştu: \(error.localizedDescription)")
+            print("Çıkış yaparken hata oluştu: \(error.localizedDescription)")
         }
     }
 }

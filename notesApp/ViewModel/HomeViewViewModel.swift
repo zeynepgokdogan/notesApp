@@ -21,6 +21,17 @@ class HomeViewViewModel: ObservableObject {
         fetchNotes()
     }
     
+    func filteredNotes(_ searchText: String) -> [NoteModel] {
+        guard !searchText.isEmpty else {
+            return notes
+        }
+        
+        return notes.filter { note in
+            note.title.lowercased().contains(searchText.lowercased()) ||
+            note.content.lowercased().contains(searchText.lowercased())
+        }
+    }
+    
     func fetchNotes() {
         db.collection("users")
             .document(userId)

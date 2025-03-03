@@ -5,7 +5,8 @@ import FirebaseFirestoreCombineSwift
 struct HomeView: View {
     @StateObject var viewModel: HomeViewViewModel
     @State private var selectedNote: NoteModel?
-
+    @State private var searchText = ""
+    
     init(userId: String = "123") {
         _viewModel = StateObject(wrappedValue: HomeViewViewModel(userId: userId))
     }
@@ -14,7 +15,7 @@ struct HomeView: View {
         NavigationView {
             ZStack {
                 List {
-                    ForEach(viewModel.notes) { note in
+                    ForEach(viewModel.filteredNotes(searchText)) { note in
                         VStack(alignment: .leading) {
                             Text(note.title)
                                 .font(.headline)
@@ -38,6 +39,7 @@ struct HomeView: View {
                 .padding()
             }
             .navigationTitle("My Notes")
+            .searchable(text: $searchText)
             .toolbar {
                 Button {
                     viewModel.showNotes = true
