@@ -10,19 +10,18 @@ class RegisterViewViewModel: ObservableObject {
     @Published var errorMessage = ""
 
     func register() {
-        print("🔥 Firebase Başlatıldı mı? \(FirebaseApp.app() != nil)")
+        print("Firebase Başlatıldı mı? \(FirebaseApp.app() != nil)")
         guard validate() else {
-            print("❌ Validation failed!")
+            print("Validation failed!")
             return
         }
 
-        print("🚀 Kullanıcı kaydı başlıyor...")
 
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] authResult, error in
             guard let strongSelf = self else { return }
             
             if let error = error {
-                print("❌ Firebase Auth Error: \(error.localizedDescription)")
+                print("Firebase Auth Error: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     strongSelf.errorMessage = "Auth Error: \(error.localizedDescription)"
                 }
@@ -30,22 +29,20 @@ class RegisterViewViewModel: ObservableObject {
             }
 
             guard let userId = authResult?.user.uid else {
-                print("❌ User ID is nil!")
+                print("User ID is nil!")
                 DispatchQueue.main.async {
                     strongSelf.errorMessage = "User ID not found"
                 }
                 return
             }
 
-            print("✅ Kullanıcı oluşturuldu! UID: \(userId)")
+            print("Kullanıcı oluşturuldu! UID: \(userId)")
 
             strongSelf.createUserWithFirestore(userId: userId)
         }
     }
 
     func createUserWithFirestore(userId: String) {
-        print("⚡ Firestore'a veri yazma fonksiyonu çağrıldı!")
-
         let db = Firestore.firestore()
         
         let userData: [String: Any] = [
@@ -54,19 +51,14 @@ class RegisterViewViewModel: ObservableObject {
             "surname": surname.trimmingCharacters(in: .whitespacesAndNewlines),
             "email": email.trimmingCharacters(in: .whitespacesAndNewlines)
         ]
-        
-        print("📌 Firestore'a kaydedilecek veri: \(userData)")
-
         db.collection("users").document(userId).setData(userData) { [weak self] error in
-            print("📌 Firestore’a yazma işlemi başladı...")
-
             if let error = error {
-                print("❌ Firestore error: \(error.localizedDescription)")
+                print("Firestore error: \(error.localizedDescription)")
                 DispatchQueue.main.async {
-                    self?.errorMessage = "❌ Firestore Error: \(error.localizedDescription)"
+                    self?.errorMessage = "Firestore Error: \(error.localizedDescription)"
                 }
             } else {
-                print("✅ Firestore: Kullanıcı başarıyla kaydedildi!")
+                print("Kullanıcı başarıyla kaydedildi!")
             }
         }
     }
@@ -77,15 +69,15 @@ class RegisterViewViewModel: ObservableObject {
               !surname.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               !email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
               !password.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
-            errorMessage = "Lütfen tüm alanları doldurun."
+            errorMessage = "Please enter all fields."
             return false
         }
         guard email.contains("@") && email.contains(".") else {
-            errorMessage = "Geçersiz e-posta adresi."
+            errorMessage = "Invalid email format."
             return false
         }
         guard password.count >= 6 else {
-            errorMessage = "Şifre en az 6 karakter olmalıdır."
+            errorMessage = "Password must be at least 6 characters long."
             return false
         }
         return true

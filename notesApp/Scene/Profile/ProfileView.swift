@@ -10,7 +10,7 @@ import FirebaseAuth
 
 struct ProfileView: View {
     @State private var isUserLoggedOut = false
-    @StateObject var viewModel = ProfileViewViewModel(userId: "t1213")
+    @StateObject var viewModel = ProfileViewViewModel(userId: "123")
     
     var body: some View {
         if isUserLoggedOut {
@@ -25,16 +25,13 @@ struct ProfileView: View {
                                 .bold()
                             Text("Soyad: \(user.surname)")
                                 .font(.title3)
-                            Text("E-posta: \(user.email)")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
                         }
                         .padding()
                     } else {
-                        ProgressView("Yükleniyor...")
+                        ProgressView("Loading...")
                     }
                 }
-                .navigationTitle("Profil")
+                .navigationTitle("Profile")
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {

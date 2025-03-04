@@ -69,16 +69,6 @@
 			path = notesApp;
 			sourceTree = "<group>";
 		};
-		81BA45982D67111F00B6FE85 /* notesAppTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = notesAppTests;
-			sourceTree = "<group>";
-		};
-		81BA45A22D67111F00B6FE85 /* notesAppUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = notesAppUITests;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,8 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				81BA45862D67111E00B6FE85 /* notesApp */,
-				81BA45982D67111F00B6FE85 /* notesAppTests */,
-				81BA45A22D67111F00B6FE85 /* notesAppUITests */,
 				81BA45852D67111E00B6FE85 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -184,9 +172,6 @@
 			dependencies = (
 				81BA45972D67111F00B6FE85 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				81BA45982D67111F00B6FE85 /* notesAppTests */,
-			);
 			name = notesAppTests;
 			packageProductDependencies = (
 			);
@@ -206,9 +191,6 @@
 			);
 			dependencies = (
 				81BA45A12D67111F00B6FE85 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				81BA45A22D67111F00B6FE85 /* notesAppUITests */,
 			);
 			name = notesAppUITests;
 			packageProductDependencies = (

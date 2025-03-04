@@ -25,7 +25,7 @@ struct notesAppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            MainView()
+            Auth()
         }
     }
 }

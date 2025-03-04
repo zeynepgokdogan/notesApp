@@ -18,7 +18,7 @@ class AddNoteViewViewModel: ObservableObject {
         guard canSave else{
             return
         }
-        guard let userId = Auth.auth().currentUser?.uid  else{
+        guard let userId = Auth.auth().currentUser?.uid else{
             return
         }
         let newItemId = UUID().uuidString
