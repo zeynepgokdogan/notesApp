@@ -36,9 +36,9 @@ class ProfileViewViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.userdata = UserModel(
                     userId: self.userId,
-                    name: data["name"] as? String ?? "Bilinmiyor",
-                    surname: data["surname"] as? String ?? "Bilinmiyor",
-                    email: data["email"] as? String ?? "Bilinmiyor"
+                    name: data["name"] as? String ?? "Unknown",
+                    surname: data["surname"] as? String ?? "Unknown",
+                    email: data["email"] as? String ?? "Unknown"
                 )
             }
         }

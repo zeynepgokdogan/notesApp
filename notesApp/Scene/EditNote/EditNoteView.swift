@@ -26,14 +26,14 @@ struct EditNoteView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.dynamic(.white, .black).edgesIgnoringSafeArea(.all)
-                
+                Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all)
                 VStack(spacing: 16) {
                     
                     Form {
                         Section(header: Text("Title").font(.caption).foregroundColor(.gray)) {
                             TextField("Enter note title...", text: $title)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .background(Color.dynamic(.white, .black.opacity(0.2)))
                         }.listRowBackground(Color.clear)
                         
                         Section(header: Text("Content").font(.caption).foregroundColor(.gray)) {

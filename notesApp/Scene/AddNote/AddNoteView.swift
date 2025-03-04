@@ -15,9 +15,7 @@ struct AddNoteView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color.dynamic(.white, .black).edgesIgnoringSafeArea(.all)
-                
-                
+                Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all)
                 VStack(spacing: 16) {
                     Text("Add a New Note")
                         .font(.title2)
@@ -66,6 +64,7 @@ struct AddNoteView: View {
                 .alert(isPresented: $viewModel.showAlert, content: {
                     Alert(title: Text("Error"), message: Text("Please fill all fields"), dismissButton: .default(Text("OK")))
                 })
+
             }
             .navigationBarTitle("New Note", displayMode: .inline)
             .navigationBarItems(leading: Button(action: {
