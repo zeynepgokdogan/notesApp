@@ -32,14 +32,14 @@ struct AddNoteView: View {
                         
                         Section(header: Text("Content").font(.caption).foregroundColor(.gray)) {
                             TextEditor(text: $viewModel.noteContent)
-                                .frame(minHeight: 100)
+                                .frame(minHeight: 200)
                                 .cornerRadius(8)
                                 .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.6)))
                                 .background(Color.dynamic(.white, .black.opacity(0.6)))
                         }.listRowBackground(Color.clear)
                     }
                     .scrollContentBackground(.hidden)
-                    .frame(height: 300)
+                    .frame(height: 400)
                     
                     
                     Button(action: {

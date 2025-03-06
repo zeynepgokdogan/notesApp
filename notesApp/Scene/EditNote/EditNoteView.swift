@@ -27,25 +27,23 @@ struct EditNoteView: View {
         NavigationView {
             ZStack {
                 Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all)
-                VStack(spacing: 16) {
+                VStack(spacing: 10) {
                     
                     Form {
-                        Section(header: Text("Title").font(.caption).foregroundColor(.gray)) {
+                        Section() {
                             TextField("Enter note title...", text: $title)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .background(Color.dynamic(.white, .black.opacity(0.2)))
-                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.6)))
+                                .padding(.bottom, 5)
+                                .overlay(Rectangle().frame(height: 1).foregroundColor(.gray), alignment: .bottom)
                         }.listRowBackground(Color.clear)
                         
-                        Section(header: Text("Content").font(.caption).foregroundColor(.gray)) {
+                        Section() {
                             TextEditor(text: $content)
-                                .frame(minHeight: 100)
-                                .background(Color.dynamic(.white, .black.opacity(0.6)))
-                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.6)))
+                                .frame(minHeight: 500)
                         }.listRowBackground(Color.clear)
                     }
                     .scrollContentBackground(.hidden)
-                    .frame(height: 300)
+                    .frame(height: 600)
                     
                     Button(action: {
                         if !title.isEmpty && !content.isEmpty {
