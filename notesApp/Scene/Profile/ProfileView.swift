@@ -64,7 +64,7 @@ struct ProfileView: View {
                                 .font(.headline)
                                 .bold()
                         }
-                        .frame(maxWidth: .infinity)
+                        .frame(width: 100)
                         .padding()
                         .background(Color.AppPrimary.vibrantPurple)
                         .foregroundColor(.white)

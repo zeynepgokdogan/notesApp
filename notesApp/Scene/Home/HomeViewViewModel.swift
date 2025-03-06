@@ -1,10 +1,3 @@
-//
-//  HomeViewViewModel.swift
-//  notesApp
-//
-//  Created by Zeynep Gökdoğan on 18.02.2025.
-//
-
 import Foundation
 import FirebaseAuth
 import FirebaseFirestore
@@ -54,10 +47,11 @@ class HomeViewViewModel: ObservableObject {
                         guard let id = data["id"] as? String,
                               let title = data["title"] as? String,
                               let content = data["content"] as? String,
-                              let createdAt = data["createdAt"] as? TimeInterval else {
+                              let createdAt = data["createdAt"] as? TimeInterval,
+                              let isPinned = data["isPinned"] as? Bool else {
                             return nil
                         }
-                        return NoteModel(id: id, title: title, content: content, createdAt: createdAt)
+                        return NoteModel(id: id, title: title, content: content, createdAt: createdAt, isPinned: isPinned)
                     }
                 }
             }
@@ -82,12 +76,27 @@ class HomeViewViewModel: ObservableObject {
             .document(note.id)
             .updateData([
                 "title": note.title,
-                "content": note.content
+                "content": note.content,
+                "isPinned": note.isPinned
             ]) { error in
                 if let error = error {
                     print("Error updating note: \(error)")
                 }
             }
     }
+    
+    func pinNote(note: NoteModel) {
+        guard let index = notes.firstIndex(where: { $0.id == note.id }) else { return }
+        notes[index].isPinned.toggle()
+        
+        db.collection("users")
+            .document(userId)
+            .collection("notes")
+            .document(note.id)
+            .updateData(["isPinned": notes[index].isPinned]) { error in
+                if let error = error {
+                    print("Error pinning note: \(error)")
+                }
+            }
+    }
 }
-

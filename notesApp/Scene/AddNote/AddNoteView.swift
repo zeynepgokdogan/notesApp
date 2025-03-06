@@ -27,14 +27,15 @@ struct AddNoteView: View {
                             TextField("Enter note title...", text: $viewModel.noteTitle)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .background(Color.dynamic(.white, .black.opacity(0.2)))
+                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.6)))
                         }.listRowBackground(Color.clear)
                         
                         Section(header: Text("Content").font(.caption).foregroundColor(.gray)) {
                             TextEditor(text: $viewModel.noteContent)
                                 .frame(minHeight: 100)
                                 .cornerRadius(8)
-                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.3)))
-                                .background(Color.dynamic(.white, .black.opacity(0.2)))
+                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.6)))
+                                .background(Color.dynamic(.white, .black.opacity(0.6)))
                         }.listRowBackground(Color.clear)
                     }
                     .scrollContentBackground(.hidden)

@@ -15,6 +15,7 @@ struct LoginView: View {
                     }
                     
                     TextField("Email", text: $viewModel.email)
+                        .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.none)
                         .autocorrectionDisabled(true)
                         .padding()
@@ -22,6 +23,9 @@ struct LoginView: View {
                             RoundedRectangle(cornerRadius: 5)
                                 .stroke(Color.gray, lineWidth: 1)
                         )
+                    
+                    Spacer().frame(height: 10)
+
                     SecureField("Password", text: $viewModel.password)
                         .padding()
                         .overlay(
@@ -29,7 +33,7 @@ struct LoginView: View {
                                 .stroke(Color.gray, lineWidth: 1)
                         )
                 }
-                .frame(height: 180)
+                .frame(height: 100)
                 .scrollContentBackground(.hidden)
                 .padding(.all, 30)
                 Button(action: {

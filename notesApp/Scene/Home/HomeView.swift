@@ -15,18 +15,32 @@ struct HomeView: View {
         NavigationView {
             ZStack {
                 List {
-                    ForEach(viewModel.filteredNotes(searchText)) { note in
+                    ForEach(viewModel.filteredNotes(searchText).sorted { $0.isPinned == $1.isPinned ? false : $0.isPinned }) { note in
                         VStack(alignment: .leading) {
-                            Text(note.title)
-                                .font(.headline)
+                            HStack {
+                                if note.isPinned {
+                                    Image(systemName: "pin.fill")
+                                        .foregroundColor(.yellow)
+                                }
+                                Text(note.title)
+                                    .font(.headline)
+                            }
                             Text(note.content)
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
+                        .contentShape(Rectangle())
                         .onTapGesture {
                             selectedNote = note
                         }
                         .swipeActions {
+                            Button {
+                                viewModel.pinNote(note: note)
+                            } label: {
+                                Label(note.isPinned ? "Unpin" : "Pin", systemImage: note.isPinned ? "pin.slash" : "pin")
+                            }
+                            .tint(.yellow)
+                            
                             Button(role: .destructive) {
                                 viewModel.deleteNote(note: note)
                             } label: {

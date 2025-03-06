@@ -34,13 +34,14 @@ struct EditNoteView: View {
                             TextField("Enter note title...", text: $title)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .background(Color.dynamic(.white, .black.opacity(0.2)))
+                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.6)))
                         }.listRowBackground(Color.clear)
                         
                         Section(header: Text("Content").font(.caption).foregroundColor(.gray)) {
                             TextEditor(text: $content)
                                 .frame(minHeight: 100)
-                                .cornerRadius(8)
-                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.3)))
+                                .background(Color.dynamic(.white, .black.opacity(0.6)))
+                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.6)))
                         }.listRowBackground(Color.clear)
                     }
                     .scrollContentBackground(.hidden)
@@ -48,7 +49,7 @@ struct EditNoteView: View {
                     
                     Button(action: {
                         if !title.isEmpty && !content.isEmpty {
-                            let updatedNote = NoteModel(id: note.id, title: title, content: content, createdAt: Date().timeIntervalSince1970)
+                            let updatedNote = NoteModel(id: note.id, title: title, content: content, createdAt: Date().timeIntervalSince1970, isPinned: note.isPinned)
                             viewModel.updateNote(note: updatedNote)
                             isPresented = nil
                         }
@@ -80,7 +81,7 @@ struct EditNoteView: View {
 
 #Preview {
     EditNoteView(
-        note: NoteModel(id: "sample-id", title: "Sample Note", content: "Sample Content", createdAt: Date().timeIntervalSince1970),
+        note: NoteModel(id: "sample-id", title: "Sample Note", content: "Sample Content", createdAt: Date().timeIntervalSince1970, isPinned: false),
         isPresented: .constant(nil),
         viewModel: HomeViewViewModel(userId: "223")
     )

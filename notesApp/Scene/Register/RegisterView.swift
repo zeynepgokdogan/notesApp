@@ -9,7 +9,7 @@ struct RegisterView: View {
                     .resizable()
                     .frame(width: 150, height: 150)
                 
-                VStack {
+                VStack (spacing : 10) {
                     if !viewModel.errorMessage.isEmpty{
                         Text(viewModel.errorMessage).foregroundStyle(.red)
                     }

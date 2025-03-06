@@ -12,13 +12,15 @@ struct NoteModel: Identifiable {
     let title: String
     let content: String
     let createdAt: TimeInterval
+    var isPinned: Bool
     
     func toFirestoreDictionary() -> [String: Any] {
         return [
             "id": id,
             "title": title,
             "content": content,
-            "createdAt": createdAt
+            "createdAt": createdAt,
+            "isPinned": isPinned
         ]
     }
 }

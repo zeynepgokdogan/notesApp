@@ -22,7 +22,7 @@ class AddNoteViewViewModel: ObservableObject {
             return
         }
         let newItemId = UUID().uuidString
-        let newItem: NoteModel = NoteModel(id: newItemId, title: noteTitle, content: noteContent, createdAt: Date().timeIntervalSince1970)
+        let newItem: NoteModel = NoteModel(id: newItemId, title: noteTitle, content: noteContent, createdAt: Date().timeIntervalSince1970, isPinned: false)
         
         let db = Firestore.firestore()
         let noteData  = newItem.toFirestoreDictionary()
