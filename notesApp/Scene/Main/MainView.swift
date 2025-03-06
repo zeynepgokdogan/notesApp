@@ -27,5 +27,3 @@ struct MainView: View{
     MainView()
 }
 
-
- 
