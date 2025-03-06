@@ -6,20 +6,16 @@ struct HomeView: View {
     @StateObject var viewModel: HomeViewViewModel
     @State private var selectedNote: NoteModel?
     @State private var searchText = ""
-
+    
     init(userId: String = "123") {
         _viewModel = StateObject(wrappedValue: HomeViewViewModel(userId: userId))
-    }
-
-    private var displayedNotes: [NoteModel] {
-        viewModel.filteredNotes(searchText).sorted { $0.isPinned && !$1.isPinned }
     }
 
     var body: some View {
         NavigationView {
             ZStack {
                 List {
-                    ForEach(displayedNotes) { note in
+                    ForEach(viewModel.filteredNotes(searchText).sorted { $0.isPinned == $1.isPinned ? false : $0.isPinned }) { note in
                         VStack(alignment: .leading) {
                             HStack {
                                 if note.isPinned {
@@ -29,7 +25,7 @@ struct HomeView: View {
                                 Text(note.title)
                                     .font(.headline)
                             }
-                            Text(viewModel.trimmedContent(note.content))
+                            Text(note.content)
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }

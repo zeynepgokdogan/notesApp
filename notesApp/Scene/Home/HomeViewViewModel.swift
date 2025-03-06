@@ -99,17 +99,4 @@ class HomeViewViewModel: ObservableObject {
                 }
             }
     }
-    
-    private func trimmedContent(_ content: String) -> String {
-            let maxLines = 4
-            let maxCharactersPerLine = 40
-            let maxCharacters = maxLines * maxCharactersPerLine
-            
-            if content.count > maxCharacters {
-                let index = content.index(content.startIndex, offsetBy: maxCharacters)
-                return String(content[..<index]) + "..."
-            } else {
-                return content
-            }
-        }
 }
