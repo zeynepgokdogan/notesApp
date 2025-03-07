@@ -20,9 +20,9 @@ Bu proje, SwiftUI kullanılarak geliştirilmiş ve Firebase ile entegre edilmiş
     <img src="https://github.com/user-attachments/assets/19ae5ce1-37a3-4a82-86be-16483889fb94" width="45%" alt="Ekran Resmi 4">
     <br>
     <img src="https://github.com/user-attachments/assets/94842f1d-0e38-4120-ae28-c60ae2f9da30" width="45%" alt="Ekran Resmi 5">
-    <img src="https://github.com/user-attachments/assets/24502631-f13c-4111-b64c-9c791b322d93" width="45%" alt="Ekran Resmi 6">
-    <br>
     <img src="https://github.com/user-attachments/assets/a0e54bd1-03b9-4b84-aed2-b0e5f641f214" width="45%" alt="Ekran Resmi 9">
+    <br>
+    <img src="https://github.com/user-attachments/assets/24502631-f13c-4111-b64c-9c791b322d93" width="45%" alt="Ekran Resmi 6">
     <img src="https://github.com/user-attachments/assets/7d1cb198-e2e7-45bd-8717-44e8cf69bc81" width="45%" alt="Ekran Resmi 10">
     <br>
     <img src="https://github.com/user-attachments/assets/1e6e8dc0-ee18-44d0-bccd-6659b483b94e" width="45%" alt="Ekran Resmi 11">
