@@ -32,6 +32,10 @@ Bu proje, SwiftUI kullanılarak geliştirilmiş ve Firebase ile entegre edilmiş
     <img src="https://github.com/user-attachments/assets/97e0a29d-88fe-46b2-9a36-8f4f01697891" width="45%" alt="Ekran Resmi 12">
     <br>
     <img src="https://github.com/user-attachments/assets/dc80fb05-57d0-44db-9759-143a31af704d" width="45%" alt="Ekran Resmi 13">
+     <img src="https://github.com/user-attachments/assets/51e4a1e8-a5ab-4ea8-98ca-ed5e5f5e3163" width="45%" alt="Ekran Resmi 7">
+        <br>
+    <img src="https://github.com/user-attachments/assets/0f24d814-99d7-48f1-9d76-8ec27d3abc2b" width="45%" alt="Ekran Resmi 8">
+    <br>
 </div>
 
 Bu README dosyasında görseller doğrudan görüntülenebilir şekilde düzenlenmiştir. Projenizi GitHub'da görüntülerken resimler yan yana düzgün bir şekilde görünecektir.
