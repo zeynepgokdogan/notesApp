@@ -99,4 +99,14 @@ class HomeViewViewModel: ObservableObject {
                 }
             }
     }
+    
+    func shareNote(note: NoteModel) {
+        let activityController = UIActivityViewController(activityItems: [note.content], applicationActivities: nil)
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let rootViewController = windowScene.windows.first?.rootViewController {
+            rootViewController.present(activityController, animated: true, completion: nil)
+        }
+    }
+
 }

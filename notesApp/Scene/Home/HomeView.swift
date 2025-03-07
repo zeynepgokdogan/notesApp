@@ -10,7 +10,7 @@ struct HomeView: View {
     init(userId: String = "123") {
         _viewModel = StateObject(wrappedValue: HomeViewViewModel(userId: userId))
     }
-
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -33,20 +33,32 @@ struct HomeView: View {
                         .onTapGesture {
                             selectedNote = note
                         }
-                        .swipeActions {
+                        .swipeActions(edge: .leading) {
                             Button {
                                 viewModel.pinNote(note: note)
                             } label: {
                                 Label(note.isPinned ? "Unpin" : "Pin", systemImage: note.isPinned ? "pin.slash" : "pin")
                             }
                             .tint(.yellow)
-                            
+                        }
+                        
+                        .swipeActions(edge: .trailing) {
                             Button(role: .destructive) {
                                 viewModel.deleteNote(note: note)
                             } label: {
                                 Label("Delete", systemImage: "trash")
                             }
+                            .tint(Color(r: 247, g: 56, b: 56))
+                            
+                            Button {
+                                viewModel.shareNote(note: note)
+                                } label: {
+                                    Label("Share", systemImage: "square.and.arrow.up")
+                                }
+                                .tint(Color(r: 49, g: 135, b: 234))
                         }
+                        
+                        
                     }
                 }
                 .listStyle(PlainListStyle())
