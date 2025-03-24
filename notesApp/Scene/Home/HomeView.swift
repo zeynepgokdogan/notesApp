@@ -71,14 +71,17 @@ struct HomeView: View {
                     viewModel.showNotes = true
                 } label: {
                     Image(systemName: "plus")
+                        .foregroundColor(.yellow)
+                        .font(.system(size: 20, weight: .bold, design: .default))
                 }
             }
             .sheet(isPresented: $viewModel.showNotes) {
                 AddNoteView(NewItemPresented: $viewModel.showNotes)
             }
-            .sheet(item: $selectedNote) { note in
+            .fullScreenCover(item: $selectedNote) { note in
                 EditNoteView(note: note, isPresented: $selectedNote, viewModel: viewModel)
             }
+
         }
     }
 }

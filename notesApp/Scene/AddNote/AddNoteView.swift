@@ -16,7 +16,7 @@ struct AddNoteView: View {
         NavigationView {
             ZStack {
                 Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all)
-                VStack(spacing: 16) {
+                VStack(spacing: 10) {
                     Text("Add a New Note")
                         .font(.title2)
                         .fontWeight(.semibold)

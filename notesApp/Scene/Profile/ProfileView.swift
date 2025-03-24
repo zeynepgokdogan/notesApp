@@ -11,7 +11,7 @@ import FirebaseAuth
 struct ProfileView: View {
     @State private var isUserLoggedOut = false
     @StateObject var viewModel: ProfileViewViewModel
-
+    
     init() {
         if let currentUserID = Auth.auth().currentUser?.uid {
             _viewModel = StateObject(wrappedValue: ProfileViewViewModel(userId: currentUserID))
@@ -20,7 +20,7 @@ struct ProfileView: View {
             isUserLoggedOut = true
         }
     }
-
+    
     var body: some View {
         if isUserLoggedOut {
             LoginView()
@@ -35,12 +35,12 @@ struct ProfileView: View {
                                 .frame(width: 100, height: 100)
                                 .foregroundColor(.gray)
                                 .padding(.top, 20)
-
+                            
                             VStack(spacing: 10) {
                                 Text("\(user.name) \(user.surname)")
                                     .font(.title)
                                     .bold()
-
+                                
                                 Text(user.email)
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
@@ -53,28 +53,27 @@ struct ProfileView: View {
                         ProgressView("Loading...")
                             .padding()
                     }
+                    
+                }
+                .padding()
+                .toolbar{
                     Button(action: {
                         viewModel.signOut()
                         isUserLoggedOut = true
                     }) {
                         HStack {
-                            Image(systemName: "power.circle.fill")
-                                .font(.title2)
                             Text("Log Out")
                                 .font(.headline)
                                 .bold()
+                            Image(systemName: "power.circle.fill")
+                                .font(.title2)
+                                .foregroundStyle(.yellow)
+                            
                         }
-                        .frame(width: 100)
                         .padding()
-                        .background(Color.AppPrimary.vibrantPurple)
                         .foregroundColor(.white)
                         .cornerRadius(10)
-                        .padding(.horizontal, 40)
-                    }
-                }
-                .navigationTitle("Profile")
-                .navigationBarTitleDisplayMode(.inline)
-                .padding()
+                    }}
             }
         }
     }

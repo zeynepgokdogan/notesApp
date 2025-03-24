@@ -19,7 +19,7 @@ struct MainView: View{
             ProfileView().tabItem {
                 Label("Profile", systemImage: "person.circle")
             }
-        }.accentColor(Color.AppPrimary.vibrantPurple)
+        }.accentColor(.yellow)
     }
 }
 
