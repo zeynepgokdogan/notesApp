@@ -70,7 +70,7 @@ struct HomeView: View {
                 Button {
                     viewModel.showNotes = true
                 } label: {
-                    Image(systemName: "plus")
+                    Image(systemName: "square.and.pencil")
                         .foregroundColor(.yellow)
                         .font(.system(size: 20, weight: .bold, design: .default))
                 }

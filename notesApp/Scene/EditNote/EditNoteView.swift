@@ -27,26 +27,30 @@ struct EditNoteView: View {
         NavigationView {
             ZStack {
                 Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all)
-                VStack(spacing: 5) {
-                    
-                    VStack {
-                        TextField("Enter note title...", text: $title)
-                            .font(.system(size: 22, weight: .bold, design: .default))
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(10)
+                VStack(spacing: 10) {
+                    Form {
+                        Section() {
+                            TextField("Enter note title...", text: $title)
+                                .font(.system(size: 22, weight: .bold, design: .default))
+                                .background(Color.dynamic(.white, .black.opacity(0.2)))
+                                .padding(.bottom, 5)
+                            
+                        }.listRowBackground(Color.clear)
                         
-                        TextEditor(text: $content)
-                            .frame(minHeight: 300)
-                            .padding()
-                            .background(Color.white)
-                            .cornerRadius(10)
-                        
+                        Section() {
+                            TextEditor(text: $content)
+                                .frame(minHeight: 500)
+                        }.listRowBackground(Color.clear)
                     }
-                    .padding()
+                    .scrollContentBackground(.hidden)
+                    .frame(height: 600)
+                    
+                    
                 }
+                .padding(.all, 5)
             }
             .navigationBarItems(leading: Button(action: {
+                
                 if !title.isEmpty && !content.isEmpty {
                     let updatedNote = NoteModel(id: note.id, title: title, content: content, createdAt: Date().timeIntervalSince1970, isPinned: note.isPinned)
                     viewModel.updateNote(note: updatedNote)
@@ -57,7 +61,6 @@ struct EditNoteView: View {
                 Image(systemName: "chevron.backward")
                     .foregroundColor(.yellow)
                     .font(.system(size: 20, weight: .bold, design: .default))
-                
             })
         }
     }
